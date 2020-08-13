@@ -1,5 +1,79 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2384131295077064798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8113093365770683914}
+  - component: {fileID: 8090453797570345371}
+  m_Layer: 8
+  m_Name: WeaponCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8113093365770683914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384131295077064798}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5110619862409136128}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &8090453797570345371
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384131295077064798}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &5110619862409136133
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,6 +104,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5110619864197978302}
+  - {fileID: 8113093365770683914}
   m_Father: {fileID: 5110619862756721131}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -224,11 +299,12 @@ MonoBehaviour:
   - {fileID: 5110619862409136135}
   - {fileID: 5110619862409136134}
   - {fileID: 7566583144991434118}
+  - {fileID: 8090453797570345371}
+  - {fileID: -7480811269800770615}
   remoteLayerName: RemotePlayer
   dontDrawLayerName: DontDraw
   PlayerGraphics: {fileID: 5110619864114086778}
   playerUIPrefab: {fileID: 6749252734143923859, guid: 3442976a6b07b4be7bc71f85fb159cc2, type: 3}
-  playerUIInstance: {fileID: 0}
 --- !u!114 &4092098556151714263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,10 +451,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  weaponLayerName: Weapon
   weapon:
     name: Pistol
     damage: 40
     range: 100
+  weaponGFX: {fileID: 5110619864197978301}
   cam: {fileID: 5110619862409136135}
   mask:
     serializedVersion: 2
@@ -412,7 +490,6 @@ GameObject:
   - component: {fileID: 5110619863052512660}
   - component: {fileID: 5110619863052512663}
   - component: {fileID: 5110619863052512662}
-  - component: {fileID: 5110619863052512661}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
@@ -428,7 +505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110619863052512683}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.404, y: -0.294, z: 0.443}
+  m_LocalPosition: {x: 0.404, y: -0.294, z: 0.81}
   m_LocalScale: {x: 0.15875, y: 0.098553, z: 0.71249}
   m_Children: []
   m_Father: {fileID: 5110619864197978302}
@@ -483,19 +560,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5110619863052512661
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5110619863052512683}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5110619863659820825
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,9 @@ public class PlayerShoot : NetworkBehaviour
 {
     private const string PLAYER_TAG = "Player";
 
-    public PlayerWeapon weapon;
+    [SerializeField] string weaponLayerName = "Weapon";
+    [SerializeField] private PlayerWeapon weapon;
+    [SerializeField] private GameObject weaponGFX;
     [SerializeField] private Camera cam;
     [SerializeField] private LayerMask mask;
 
@@ -18,6 +20,8 @@ public class PlayerShoot : NetworkBehaviour
             Debug.Log("No camera referenced in PlayerShoot");
             this.enabled = false;
         }
+
+        weaponGFX.layer = LayerMask.NameToLayer(weaponLayerName);
     }
 
     private void Update()

@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     {
         motor = GetComponent<PlayerMotor>();
         joint = GetComponent<ConfigurableJoint>();
-
         SetJointSettings(JointSpring);
     }
     private void Update()

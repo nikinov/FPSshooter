@@ -661,10 +661,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: a7967009-0e82-48c7-bdbe-3232d6f49883
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: FPSShooter
+  organizationId: novellenicholas
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
