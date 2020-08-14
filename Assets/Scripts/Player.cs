@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
 
 public class Player : NetworkBehaviour
 {
@@ -17,11 +18,12 @@ public class Player : NetworkBehaviour
 
     [SyncVar] private int currentHealth;
 
-    
+    [SerializeField] private float DethWait = 3.9f;
     [SerializeField] private Component[] disableOnDeth;
     [SerializeField] private Component[] enableOnDeth;
     [SerializeField] private GameObject[] enableOnDethObj;
     [SerializeField] private GameObject[] disableOnDethObj;
+    [SerializeField] private TextMeshProUGUI DeathcountDown;
 
     public void Setup ()
     {
@@ -69,14 +71,15 @@ public class Player : NetworkBehaviour
 
     private IEnumerator Respawn()
     {
-        int fullIntTime = 0;
-        for (int i = 0; i < (int)3.9f; i++)
+        DeathcountDown.text = "";
+        Debug.Log((int)DethWait);
+        SetDethStuff(true);
+        yield return new WaitForSeconds(DethWait - (int)DethWait);
+        for (int i = 1; i < (int)DethWait + 1; i++)
         {
-            Debug.Log(i);
-            yield return new WaitForSeconds(i);
-            fullIntTime += 1;
+            DeathcountDown.text = ((int)DethWait - (i-1)).ToString();
+            yield return new WaitForSeconds(1);
         }
-        //yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime - fullIntTime);
 
         SetDefaults();
         Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
@@ -100,7 +103,7 @@ public class Player : NetworkBehaviour
     {
         foreach (Component item in enableOnDeth)
         {
-            if (item.GetComponent<Behaviour>() != null)
+            if (item as MonoBehaviour != null)
             {
                 item.GetComponent<Behaviour>().enabled = set;
             }
@@ -115,7 +118,7 @@ public class Player : NetworkBehaviour
         }
         foreach (Component item in disableOnDeth)
         {
-            if (item.GetComponent<Behaviour>() != null)
+            if (item as MonoBehaviour != null)
             {
                 item.GetComponent<Behaviour>().enabled = !set;
             }
