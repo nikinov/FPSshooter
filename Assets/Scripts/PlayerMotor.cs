@@ -77,11 +77,8 @@ public class PlayerMotor : MonoBehaviour
                 if (joint.connectedAnchor.y != hit.point.y + 1.5f)
                 {
                     joint.connectedAnchor = new Vector3(0, hit.point.y + 1f, 0);
-                    Debug.Log(hit.point.y + 1);
                 }
             }
-
-
         }
 
         if (thrusterForse != Vector3.zero)

@@ -458,7 +458,7 @@ MonoBehaviour:
     name: Pistol
     damage: 40
     range: 100
-  weaponGFX: {fileID: 5110619864197978301}
+  weaponGFX: {fileID: 5110619863052512683}
   cam: {fileID: 5110619862409136135}
   mask:
     serializedVersion: 2
