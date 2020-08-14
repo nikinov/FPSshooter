@@ -70,7 +70,7 @@ public class Player : NetworkBehaviour
     private IEnumerator Respawn()
     {
         int fullIntTime = 0;
-        for (int i = 0; i < (int)GameManager.instance.matchSettings.respawnTime; i++)
+        for (int i = 0; i < (int)3.9f; i++)
         {
             Debug.Log(i);
             yield return new WaitForSeconds(i);
