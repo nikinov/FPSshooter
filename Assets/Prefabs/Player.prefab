@@ -263,6 +263,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 5110619862409136135}
   cameraRotationLimit: 85
+  joint: {fileID: 0}
+  grounded: 0
 --- !u!114 &-8835517941974468092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,8 +354,8 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.6863456, y: 1.673, z: 9.46}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 1.673, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
