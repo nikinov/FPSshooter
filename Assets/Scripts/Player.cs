@@ -17,31 +17,28 @@ public class Player : NetworkBehaviour
 
     [SyncVar] private int currentHealth;
 
-    [SerializeField]
-    private Behaviour[] disableOnDeth;
-    private bool[] wasEnabled;
+    
+    [SerializeField] private Component[] disableOnDeth;
+    [SerializeField] private Component[] enableOnDeth;
+    [SerializeField] private GameObject[] enableOnDethObj;
+    [SerializeField] private GameObject[] disableOnDethObj;
 
     public void Setup ()
     {
-        wasEnabled = new bool[disableOnDeth.Length];
-        for (int i = 0; i < wasEnabled.Length; i++)
-        {
-            wasEnabled[i] = disableOnDeth[i].enabled;
-        }
-
         SetDefaults();
+        SetDethStuff(false);
     }
 
-    //private void Update()
-    //{
-    //    if (!isLocalPlayer)
-    //        return;
+    private void Update()
+    {
+        if (!isLocalPlayer)
+            return;
 
-    //    if (Input.GetKeyDown(KeyCode.K))
-    //    {
-    //        RpcTakeDamage(999);
-    //    }
-    //}
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            RpcTakeDamage(999);
+        }
+    }
 
     [ClientRpc]
     public void RpcTakeDamage (int _amount)
@@ -63,15 +60,6 @@ public class Player : NetworkBehaviour
     {
         isDead = true;
 
-        for (int i = 0; i < disableOnDeth.Length; i++)
-        {
-            disableOnDeth[i].enabled = false;
-        }
-
-        Collider _col = GetComponent<Collider>();
-        if (_col != null)
-            _col.enabled = true;
-
         Debug.Log(transform.name + " is DEAD!");
 
         StartCoroutine(Respawn());
@@ -81,14 +69,21 @@ public class Player : NetworkBehaviour
 
     private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
+        int fullIntTime = 0;
+        for (int i = 0; i < (int)GameManager.instance.matchSettings.respawnTime; i++)
+        {
+            Debug.Log(i);
+            yield return new WaitForSeconds(i);
+            fullIntTime += 1;
+        }
+        //yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime - fullIntTime);
 
         SetDefaults();
         Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
         transform.position = _spawnPoint.position;
         transform.rotation = _spawnPoint.rotation;
-
         Debug.Log(transform.name + " respawned");
+        SetDethStuff(false);
     }
 
     public void SetDefaults()
@@ -97,13 +92,41 @@ public class Player : NetworkBehaviour
 
         currentHealth = maxHealth;
 
-        for (int i = 0; i < disableOnDeth.Length; i++)
-        {
-            disableOnDeth[i].enabled = wasEnabled[i];
-        }
-
         Collider _col = GetComponent<Collider>();
         if (_col != null)
             _col.enabled = true;
+    }
+    private void SetDethStuff(bool set)
+    {
+        foreach (Component item in enableOnDeth)
+        {
+            if (item.GetComponent<Behaviour>() != null)
+            {
+                item.GetComponent<Behaviour>().enabled = set;
+            }
+            else
+            {
+                item.Equals(set);
+            }
+        }
+        foreach (GameObject item in enableOnDethObj)
+        {
+            item.SetActive(set);
+        }
+        foreach (Component item in disableOnDeth)
+        {
+            if (item.GetComponent<Behaviour>() != null)
+            {
+                item.GetComponent<Behaviour>().enabled = !set;
+            }
+            else
+            {
+                item.Equals(!set);
+            }
+        }
+        foreach (GameObject item in disableOnDethObj)
+        {
+            item.SetActive(!set);
+        }
     }
 }

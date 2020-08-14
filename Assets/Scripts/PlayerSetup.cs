@@ -8,13 +8,13 @@ public class PlayerSetup : NetworkBehaviour
 {
     [SerializeField] private Behaviour[] componentsToDisable;
 
+    [SerializeField] private GameObject[] ObjectsToDisable;
+
     [SerializeField] private string remoteLayerName = "RemotePlayer";
 
     [SerializeField] string dontDrawLayerName = "DontDraw";
 
     [SerializeField] private GameObject PlayerGraphics;
-
-    [SerializeField] private GameObject playerUIPrefab;
 
     private GameObject playerUIInstance;
 
@@ -37,10 +37,6 @@ public class PlayerSetup : NetworkBehaviour
 
             // disabel player graphics for local player
             SetLayerRecursively(PlayerGraphics, LayerMask.NameToLayer(dontDrawLayerName));
-
-            // create UI
-            playerUIInstance = Instantiate(playerUIPrefab);
-            playerUIInstance.name = playerUIPrefab.name;
         }
 
         GetComponent<Player>().Setup();
@@ -71,6 +67,10 @@ public class PlayerSetup : NetworkBehaviour
         for (int i = 0; i < componentsToDisable.Length; i++)
         {
             componentsToDisable[i].enabled = false;
+        }
+        foreach (GameObject Obj in ObjectsToDisable)
+        {
+            Obj.SetActive(false);
         }
     }
 
