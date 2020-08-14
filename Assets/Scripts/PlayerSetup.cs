@@ -68,9 +68,9 @@ public class PlayerSetup : NetworkBehaviour
         {
             componentsToDisable[i].enabled = false;
         }
-        foreach (GameObject Obj in ObjectsToDisable)
+        for (int i = 0; i < ObjectsToDisable.Length; i++)
         {
-            Obj.SetActive(false);
+            ObjectsToDisable[i].SetActive(false);
         }
     }
 

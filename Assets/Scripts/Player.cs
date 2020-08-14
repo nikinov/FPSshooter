@@ -101,20 +101,23 @@ public class Player : NetworkBehaviour
     }
     private void SetDethStuff(bool set)
     {
-        foreach (Component item in enableOnDeth)
+        if (isLocalPlayer)
         {
-            if (item as MonoBehaviour != null)
+            foreach (Component item in enableOnDeth)
             {
-                item.GetComponent<Behaviour>().enabled = set;
+                if (item as MonoBehaviour != null)
+                {
+                    item.GetComponent<Behaviour>().enabled = set;
+                }
+                else
+                {
+                    item.Equals(set);
+                }
             }
-            else
+            foreach (GameObject item in enableOnDethObj)
             {
-                item.Equals(set);
+                item.SetActive(set);
             }
-        }
-        foreach (GameObject item in enableOnDethObj)
-        {
-            item.SetActive(set);
         }
         foreach (Component item in disableOnDeth)
         {
@@ -127,9 +130,14 @@ public class Player : NetworkBehaviour
                 item.Equals(!set);
             }
         }
+        SetStuffToDethAddOn(set);
+    }
+    private void SetStuffToDethAddOn(bool set)
+    {
         foreach (GameObject item in disableOnDethObj)
         {
             item.SetActive(!set);
         }
+        gameObject.GetComponent<Collider>().enabled = !set;
     }
 }

@@ -953,10 +953,9 @@ MonoBehaviour:
   disableOnDeth:
   - {fileID: 7566583144991434118}
   - {fileID: 8654356301130875558}
-  - {fileID: 5110619862756721129}
+  - {fileID: 5110619862756721128}
   - {fileID: 5110619862756721130}
   - {fileID: 5110619862756721108}
-  - {fileID: 5110619862756721128}
   enableOnDeth: []
   enableOnDethObj:
   - {fileID: 2342411901757374456}
