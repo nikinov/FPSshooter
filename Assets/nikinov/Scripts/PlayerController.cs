@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private JointDriveMode JointMode;
     [SerializeField] private float JointSpring = 20f;
     [SerializeField] private float JointMaxForse = 40f;
+    [SerializeField] private DynamicJoystick variableJoystick;
+    [SerializeField] private string m_DeviceType;
 
     private PlayerMotor motor;
     private ConfigurableJoint joint;
@@ -23,11 +25,42 @@ public class PlayerController : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         joint = GetComponent<ConfigurableJoint>();
         SetJointSettings(JointSpring);
+        //Check if the device running this is a desktop
+        if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            m_DeviceType = "Desktop";
+            variableJoystick.gameObject.SetActive(false);
+        }
+
+        //Check if the device running this is a handheld
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            m_DeviceType = "Handheld";
+            variableJoystick.gameObject.SetActive(true);
+        }
+
+        Debug.Log("Device type : " + m_DeviceType);
     }
     private void Update()
     {
-        float xMov = Input.GetAxisRaw("Horizontal");
-        float zMov = Input.GetAxisRaw("Vertical");
+
+        float xMov = 0;
+        float zMov = 0;
+        if (m_DeviceType == "Desktop")
+        { 
+            xMov = Input.GetAxisRaw("Horizontal");
+            zMov = Input.GetAxisRaw("Vertical");
+        }
+        else if (m_DeviceType == "Handheld")
+        {
+            xMov = variableJoystick.Direction.x;
+            zMov = variableJoystick.Direction.y;
+            variableJoystick.gameObject.SetActive(true);
+        }
+        else
+        {
+            print("unknown Device");
+        }
 
         Vector3 moveHorizontal = transform.right * xMov;
         Vector3 moveVertical = transform.forward * zMov;
@@ -69,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
         // apply thruster forse
         motor.ApplyThruster(_thrusterForce);
+
     }
 
     private void SetJointSettings (float _JointSpring)
